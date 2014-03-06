@@ -5,6 +5,8 @@
 
 #include "stdafx.h"
 #include <windows.h>
+#include <queue>
+#include <stdio.h>
 
 class bPress {
 	INPUT ip;
@@ -29,11 +31,14 @@ public:
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+	std::queue<bPress> inputs;
+	inputs.push(bPress(0x41));
+	inputs.push(bPress(0x42));
 	Sleep(5000);
-	bPress press = bPress(0x41);
-	press.exec();
-	bPress press2 = bPress(0x42);
-	press2.exec();
+	while (!inputs.empty()) {
+		inputs.front().exec();
+		inputs.pop();
+		Sleep(500);
+	}
 	return 0;
 }
-
